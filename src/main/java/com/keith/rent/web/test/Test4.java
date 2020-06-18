@@ -30,7 +30,7 @@ public class Test4 extends Thread{
         Tenant tenant = new Tenant();
         tenant.setTenantId(5);
         tenant.setAddress("hubei");
-        tenant.setApartmentId(304);
+        tenant.setApartmentId("304");
     }
 
 

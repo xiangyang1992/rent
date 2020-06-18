@@ -3,10 +3,14 @@ package com.keith.rent.core.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
@@ -18,6 +22,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @EnableCaching
 public class redisConfig extends CachingConfigurerSupport {
+
+    private static final Logger loggr = LoggerFactory.getLogger(redisConfig.class);
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
@@ -96,4 +102,36 @@ public class redisConfig extends CachingConfigurerSupport {
     }
 
 
+    /**
+     * 自定义生成key的规则
+     */
+//    @Override
+//    public KeyGenerator keyGenerator() {
+//        return new KeyGenerator() {
+//            @Override
+//            public Object generate(Object o, Method method, Object... objects) {
+//                //格式化字符串
+//                StringBuffer sb = new StringBuffer();
+//                sb.append(o.getClass().getName());
+//                sb.append(method.getName());
+//                for (Object object : objects) {
+//                    sb.append(object.toString());
+//                }
+//                loggr.info("调用Redis缓存key:" + sb.toString());
+//                return sb.toString();
+//            }
+//        };
+//    }
+
+    /**
+     * 采用RedisCacheManager作为缓存管理器
+     *
+     * @param connectionFactory
+     */
+
+    @Bean
+    public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
+        RedisCacheManager cacheManager = RedisCacheManager.create(connectionFactory);
+        return cacheManager;
+    }
 }

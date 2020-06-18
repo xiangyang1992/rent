@@ -38,7 +38,7 @@ public class Tenant implements Serializable {
     /**
     * 公寓id
     */
-    private Integer apartmentId;
+    private String  apartmentId;
     /**
     * 入住时间
     */

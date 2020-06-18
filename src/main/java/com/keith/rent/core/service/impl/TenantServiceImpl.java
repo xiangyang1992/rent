@@ -6,6 +6,8 @@ import com.keith.rent.core.jdbcDao.TenantJdbcDao;
 import com.keith.rent.core.service.TenantService;
 import com.keith.rent.web.util.MapToBeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,6 +22,7 @@ import java.util.Map;
  * @since 2020-05-27 15:03:49
  */
 @Service("tenantService")
+@CacheConfig(cacheNames = "tenant")
 public class TenantServiceImpl implements TenantService {
     @Resource
     private TenantDao tenantDao;
@@ -33,6 +36,7 @@ public class TenantServiceImpl implements TenantService {
      * @param tenantId 主键
      * @return 实例对象
      */
+    @Cacheable
     @Override
     public Tenant queryById(String tenantId) {
         return this.tenantDao.queryById(tenantId);
