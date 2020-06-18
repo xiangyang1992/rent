@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keith.rent.core.dao.SysRoomDao">
+
+    <resultMap type="com.keith.rent.core.entity.Room" id="RoomMap">
+        <result property="roomid" column="roomId" jdbcType="INTEGER"/>
+        <result property="roomnum" column="roomNum" jdbcType="INTEGER"/>
+        <result property="roomname" column="roomName" jdbcType="VARCHAR"/>
+        <result property="roomuserid" column="roomUserId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="RoomMap" parameterType="Integer">
+        select
+          roomId, roomNum, roomName, roomUserId
+        from rent.sys_room
+        where roomId = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="RoomMap">
+        select
+          roomId, roomNum, roomName, roomUserId
+        from rent.sys_room
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="RoomMap">
+        select
+          roomId, roomNum, roomName, roomUserId
+        from rent.sys_room
+        <where>
+            <if test="roomid != null">
+                and roomId = #{roomid}
+            </if>
+            <if test="roomnum != null">
+                and roomNum = #{roomnum}
+            </if>
+            <if test="roomname != null and roomname != ''">
+                and roomName = #{roomname}
+            </if>
+            <if test="roomuserid != null">
+                and roomUserId = #{roomuserid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="roomid" useGeneratedKeys="true">
+        insert into rent.sys_room(roomNum, roomName, roomUserId)
+        values (#{roomnum}, #{roomname}, #{roomuserid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update rent.sys_room
+        <set>
+            <if test="roomnum != null">
+                roomNum = #{roomnum},
+            </if>
+            <if test="roomname != null and roomname != ''">
+                roomName = #{roomname},
+            </if>
+            <if test="roomuserid != null">
+                roomUserId = #{roomuserid},
+            </if>
+        </set>
+        where roomId = #{roomid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from rent.sys_room where roomId = #{roomid}
+    </delete>
+
+</mapper>

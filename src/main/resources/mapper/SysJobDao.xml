@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keith.rent.core.dao.SysJobDao">
+
+    <resultMap type="com.keith.rent.core.entity.SysJob" id="SysJobMap">
+        <result property="taskId" column="task_id" jdbcType="INTEGER"/>
+        <result property="taskName" column="task_name" jdbcType="VARCHAR"/>
+        <result property="cron" column="cron" jdbcType="VARCHAR"/>
+        <result property="className" column="class_name" jdbcType="VARCHAR"/>
+        <result property="methodName" column="method_name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="taskDec" column="task_dec" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysJobMap">
+        select
+          task_id, task_name, cron, class_name, method_name, type, is_deleted, create_by, task_dec, status
+        from rent.sys_job
+        where task_id = #{taskId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysJobMap">
+        select
+          task_id, task_name, cron, class_name, method_name, type, is_deleted, create_by, task_dec, status
+        from rent.sys_job
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysJobMap">
+        select
+          task_id, task_name, cron, class_name, method_name, type, is_deleted, create_by, task_dec, status
+        from rent.sys_job
+        <where>
+            <if test="taskId != null">
+                and task_id = #{taskId}
+            </if>
+            <if test="taskName != null and taskName != ''">
+                and task_name = #{taskName}
+            </if>
+            <if test="cron != null and cron != ''">
+                and cron = #{cron}
+            </if>
+            <if test="className != null and className != ''">
+                and class_name = #{className}
+            </if>
+            <if test="methodName != null and methodName != ''">
+                and method_name = #{methodName}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="taskDec != null">
+                and task_dec = #{taskDec}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="taskId" useGeneratedKeys="true">
+        insert into rent.sys_job(task_name, cron, class_name, method_name, type, is_deleted, create_by, task_dec, status)
+        values (#{taskName}, #{cron}, #{className}, #{methodName}, #{type}, #{isDeleted}, #{createBy}, #{taskDec}, #{status})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update rent.sys_job
+        <set>
+            <if test="taskName != null and taskName != ''">
+                task_name = #{taskName},
+            </if>
+            <if test="cron != null and cron != ''">
+                cron = #{cron},
+            </if>
+            <if test="className != null and className != ''">
+                class_name = #{className},
+            </if>
+            <if test="methodName != null and methodName != ''">
+                method_name = #{methodName},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="taskDec != null">
+                task_dec = #{taskDec},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where task_id = #{taskId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from rent.sys_job where task_id = #{taskId}
+    </delete>
+
+</mapper>

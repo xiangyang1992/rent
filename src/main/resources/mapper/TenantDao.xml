@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keith.rent.core.dao.TenantDao">
+
+    <resultMap type="com.keith.rent.core.entity.Tenant" id="TenantMap">
+        <result property="tenantId" column="tenant_id" jdbcType="INTEGER"/>
+        <result property="tenantName" column="tenant_name" jdbcType="VARCHAR"/>
+        <result property="roomId" column="room_id" jdbcType="INTEGER"/>
+        <result property="apartmentId" column="apartment_id" jdbcType="INTEGER"/>
+        <result property="checkInTime" column="check_in_time" jdbcType="OTHER"/>
+        <result property="checkOutTime" column="check_out_time" jdbcType="OTHER"/>
+        <result property="identityCard" column="identity_card" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TenantMap">
+        select
+          tenant_id, tenant_name, room_id, apartment_id, check_in_time, check_out_time, identity_card, phone, sex, status, address
+        from rent.tenant
+        where  tenant_id= #{tenantId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TenantMap">
+        select
+          tenant_id, tenant_name, room_id, apartment_id, check_in_time, check_out_time, identity_card, phone, sex, status, address
+        from rent.tenant
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TenantMap">
+        select
+          tenant_id, tenant_name, room_id, apartment_id, check_in_time, check_out_time, identity_card, phone, sex, status, address
+        from rent.tenant
+        <where>
+            <if test="tenantId != null">
+                and tenant_id = #{tenantId}
+            </if>
+            <if test="tenantName != null and tenantName != ''">
+                and tenant_name = #{tenantName}
+            </if>
+            <if test="roomId != null">
+                and room_id = #{roomId}
+            </if>
+            <if test="apartmentId != null">
+                and apartment_id = #{apartmentId}
+            </if>
+            <if test="checkInTime != null">
+                and check_in_time = #{checkInTime}
+            </if>
+            <if test="checkOutTime != null">
+                and check_out_time = #{checkOutTime}
+            </if>
+            <if test="identityCard != null and identityCard != ''">
+                and identity_card = #{identityCard}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="tenantId" useGeneratedKeys="true">
+        insert into rent.tenant( tenant_name, room_id, apartment_id, check_in_time, check_out_time, identity_card, phone, sex, status, address)
+        values (#{tenantName}, #{roomId}, #{apartmentId}, #{checkInTime}, #{checkOutTime}, #{identityCard}, #{phone}, #{sex}, #{status}, #{address})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update rent.tenant
+        <set>
+            <if test="tenantId != null">
+                tenant_id = #{tenantId},
+            </if>
+            <if test="tenantName != null and tenantName != ''">
+                tenant_name = #{tenantName},
+            </if>
+            <if test="roomId != null">
+                room_id = #{roomId},
+            </if>
+            <if test="apartmentId != null">
+                apartment_id = #{apartmentId},
+            </if>
+            <if test="checkInTime != null">
+                check_in_time = #{checkInTime},
+            </if>
+            <if test="checkOutTime != null">
+                check_out_time = #{checkOutTime},
+            </if>
+            <if test="identityCard != null and identityCard != ''">
+                identity_card = #{identityCard},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+        </set>
+        where  = #{}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from rent.tenant where  tenant_id= #{tenantId}
+    </delete>
+
+    <select id="queryAllTenants" resultMap="TenantMap">
+        select * from rent.tenant
+    </select>
+
+    <select id="queryByTenantName" resultMap="TenantMap">
+        select * from rent.tenant where 1=1 and tenant_name like concat('%',#{tennatName},'%')
+    </select>
+
+</mapper>

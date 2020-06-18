@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keith.rent.core.dao.ApartmentDao">
+
+    <resultMap type="com.keith.rent.core.entity.Apartment" id="ApartmentMap">
+        <result property="apartmentId" column="apartment_id" jdbcType="INTEGER"/>
+        <result property="apartmentName" column="apartment_name" jdbcType="VARCHAR"/>
+        <result property="apartmentMangerId" column="apartment_manger_id" jdbcType="INTEGER"/>
+        <result property="apartmentMangerName" column="apartment_manger_name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createPerson" column="create_person" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ApartmentMap">
+        select
+         apartment_id, apartment_name, apartment_manger_id, apartment_manger_name,create_time,create_person
+        from rent.apartment
+        where apartment_id = #{apartmentId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ApartmentMap">
+        select
+           apartment_id, apartment_name, apartment_manger_id, apartment_manger_name,create_time,create_person
+        from rent.apartment
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ApartmentMap">
+        select
+          apartment_id, apartment_name, apartment_manger_id, apartment_manger_name,create_time,create_person
+        from rent.apartment
+        <where>
+            <if test="apartmentId != null">
+                and apartment_id = #{apartmentId}
+            </if>
+            <if test="apartmentName != null and apartmentName != ''">
+                and apartment_name = #{apartmentName}
+            </if>
+            <if test="apartmentMangerId != null">
+                and apartment_manger_id = #{apartmentMangerId}
+            </if>
+            <if test="apartmentMangerName != null and apartmentMangerName != ''">
+                and apartment_manger_name = #{apartmentMangerName}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createPerson !=null and createPerson!= '' ">
+                and create_person = #{createPerson}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="apartment_id" useGeneratedKeys="true">
+        insert into rent.apartment(apartment_name, apartment_manger_id, apartment_manger_name,create_time,create_person)
+        values (#{apartmentName}, #{apartmentMangerId}, #{apartmentMangerName},#{createTime},#{createPerson})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update rent.apartment
+        <set>
+            <if test="apartmentName != null and apartmentName != ''">
+                apartment_name = #{apartmentName},
+            </if>
+            <if test="apartmentMangerId != null">
+                apartment_manger_id = #{apartmentMangerId},
+            </if>
+            <if test="apartmentMangerName != null and apartmentMangerName != ''">
+                apartment_manger_name = #{apartmentMangerName},
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createPerson !=null and createPerson!= '' ">
+                and create_person = #{createPerson}
+            </if>
+        </set>
+        where apartment_id = #{apartmentId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from rent.apartment where apartment_id = #{apartmentId}
+    </delete>
+
+    <select id="queryByApartmentId" resultMap="ApartmentMap">
+        select
+        apartment_id, apartment_name, apartment_manger_id, apartment_manger_name,create_time,create_person
+        from rent.apartment
+        where apartment_id = #{apartmentId}
+    </select>
+
+</mapper>

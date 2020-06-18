@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keith.rent.core.dao.WaterEleDetailDao">
+
+    <resultMap type="com.keith.rent.core.entity.WaterEleDetail" id="WaterEleDetailMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="roomid" column="roomId" jdbcType="INTEGER"/>
+        <result property="waterCurrentData" column="water_current_data" jdbcType="VARCHAR"/>
+        <result property="waterLastData" column="water_last_data" jdbcType="VARCHAR"/>
+        <result property="eleCurrentData" column="ele_current_data" jdbcType="VARCHAR"/>
+        <result property="eleLastData" column="ele_last_data" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="WaterEleDetailMap">
+        select
+          id, roomId, water_current_data, water_last_data, ele_current_data, ele_last_data
+        from rent.water_ele_detail
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="WaterEleDetailMap">
+        select
+          id, roomId, water_current_data, water_last_data, ele_current_data, ele_last_data
+        from rent.water_ele_detail
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="WaterEleDetailMap">
+        select
+          id, roomId, water_current_data, water_last_data, ele_current_data, ele_last_data
+        from rent.water_ele_detail
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="roomid != null">
+                and roomId = #{roomid}
+            </if>
+            <if test="waterCurrentData != null and waterCurrentData != ''">
+                and water_current_data = #{waterCurrentData}
+            </if>
+            <if test="waterLastData != null and waterLastData != ''">
+                and water_last_data = #{waterLastData}
+            </if>
+            <if test="eleCurrentData != null and eleCurrentData != ''">
+                and ele_current_data = #{eleCurrentData}
+            </if>
+            <if test="eleLastData != null and eleLastData != ''">
+                and ele_last_data = #{eleLastData}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into rent.water_ele_detail(roomId, water_current_data, water_last_data, ele_current_data, ele_last_data)
+        values (#{roomid}, #{waterCurrentData}, #{waterLastData}, #{eleCurrentData}, #{eleLastData})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update rent.water_ele_detail
+        <set>
+            <if test="roomid != null">
+                roomId = #{roomid},
+            </if>
+            <if test="waterCurrentData != null and waterCurrentData != ''">
+                water_current_data = #{waterCurrentData},
+            </if>
+            <if test="waterLastData != null and waterLastData != ''">
+                water_last_data = #{waterLastData},
+            </if>
+            <if test="eleCurrentData != null and eleCurrentData != ''">
+                ele_current_data = #{eleCurrentData},
+            </if>
+            <if test="eleLastData != null and eleLastData != ''">
+                ele_last_data = #{eleLastData},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from rent.water_ele_detail where id = #{id}
+    </delete>
+
+</mapper>

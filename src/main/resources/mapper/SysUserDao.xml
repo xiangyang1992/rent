@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keith.rent.core.dao.SysUserDao">
+
+    <resultMap type="com.keith.rent.core.entity.SysUser" id="SysUserMap">
+        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="uname" column="uName" jdbcType="VARCHAR"/>
+        <result property="password" column="passWord" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickName" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysUserMap">
+        select
+          uid, uName, passWord, nickName, phone
+        from rent.sys_user
+        where uid = #{uid}
+    </select>
+
+    <select id="queryByName" resultMap="SysUserMap">
+        select uid, uName, passWord, nickName, phone
+        from sys_user
+        where uName = #{username}
+    </select>
+    
+    
+    <select id="selectAll" resultMap="SysUserMap">
+        SELECT  uid, uName, nickName, phone
+        FROM sys_user
+        WHERE 1=1
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysUserMap">
+        select
+          uid, uName, passWord, nickName, phone
+        from rent.sys_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysUserMap">
+        select
+          uid, uName, passWord, nickName, phone
+        from rent.sys_user
+        <where>
+            <if test="uid != null">
+                and uid = #{uid}
+            </if>
+            <if test="uname != null and uname != ''">
+                and uName = #{uname}
+            </if>
+            <if test="password != null and password != ''">
+                and passWord = #{password}
+            </if>
+            <if test="nickname != null and nickname != ''">
+                and nickName = #{nickname}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into rent.sys_user(uName, passWord, nickName, phone)
+        values (#{uname}, #{password}, #{nickname}, #{phone})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update rent.sys_user
+        <set>
+            <if test="uname != null and uname != ''">
+                uName = #{uname},
+            </if>
+            <if test="password != null and password != ''">
+                passWord = #{password},
+            </if>
+            <if test="nickname != null and nickname != ''">
+                nickName = #{nickname},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from rent.sys_user where uid = #{uid}
+    </delete>
+
+    <delete id="deleteBatch" parameterType="int[]">
+        DELETE FROM sys_user WHERE uid IN 
+        <foreach collection="array" item="uid" open="(" separator="," close=")">
+            #{uid}
+        </foreach>
+    </delete>
+
+</mapper>

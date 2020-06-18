@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keith.rent.core.dao.RoomDetailDao">
+
+    <resultMap type="com.keith.rent.core.entity.RoomDetail" id="RoomDetailMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="roomcost" column="roomCost" jdbcType="VARCHAR"/>
+        <result property="roomcashpledge" column="roomCashPledge" jdbcType="VARCHAR"/>
+        <result property="roomcardcash" column="roomCardCash" jdbcType="VARCHAR"/>
+        <result property="roomothercash" column="roomOtherCash" jdbcType="VARCHAR"/>
+        <result property="mangerfee" column="mangerFee" jdbcType="VARCHAR"/>
+        <result property="interfee" column="interFee" jdbcType="VARCHAR"/>
+        <result property="waterfee" column="waterFee" jdbcType="VARCHAR"/>
+        <result property="otherfee" column="otherFee" jdbcType="VARCHAR"/>
+        <result property="total" column="total" jdbcType="VARCHAR"/>
+        <result property="roomid" column="roomId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="RoomDetailMap">
+        select
+          id, roomCost, roomCashPledge, roomCardCash, roomOtherCash, mangerFee, interFee, waterFee, otherFee, total, roomId
+        from rent.sys_room_detail
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="RoomDetailMap">
+        select
+          id, roomCost, roomCashPledge, roomCardCash, roomOtherCash, mangerFee, interFee, waterFee, otherFee, total, roomId
+        from rent.sys_room_detail
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="RoomDetailMap">
+        select
+          id, roomCost, roomCashPledge, roomCardCash, roomOtherCash, mangerFee, interFee, waterFee, otherFee, total, roomId
+        from rent.sys_room_detail
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="roomcost != null and roomcost != ''">
+                and roomCost = #{roomcost}
+            </if>
+            <if test="roomcashpledge != null and roomcashpledge != ''">
+                and roomCashPledge = #{roomcashpledge}
+            </if>
+            <if test="roomcardcash != null and roomcardcash != ''">
+                and roomCardCash = #{roomcardcash}
+            </if>
+            <if test="roomothercash != null and roomothercash != ''">
+                and roomOtherCash = #{roomothercash}
+            </if>
+            <if test="mangerfee != null and mangerfee != ''">
+                and mangerFee = #{mangerfee}
+            </if>
+            <if test="interfee != null and interfee != ''">
+                and interFee = #{interfee}
+            </if>
+            <if test="waterfee != null and waterfee != ''">
+                and waterFee = #{waterfee}
+            </if>
+            <if test="otherfee != null and otherfee != ''">
+                and otherFee = #{otherfee}
+            </if>
+            <if test="total != null and total != ''">
+                and total = #{total}
+            </if>
+            <if test="roomid != null">
+                and roomId = #{roomid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into rent.sys_room_detail(roomCost, roomCashPledge, roomCardCash, roomOtherCash, mangerFee, interFee, waterFee, otherFee, total, roomId)
+        values (#{roomcost}, #{roomcashpledge}, #{roomcardcash}, #{roomothercash}, #{mangerfee}, #{interfee}, #{waterfee}, #{otherfee}, #{total}, #{roomid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update rent.sys_room_detail
+        <set>
+            <if test="roomcost != null and roomcost != ''">
+                roomCost = #{roomcost},
+            </if>
+            <if test="roomcashpledge != null and roomcashpledge != ''">
+                roomCashPledge = #{roomcashpledge},
+            </if>
+            <if test="roomcardcash != null and roomcardcash != ''">
+                roomCardCash = #{roomcardcash},
+            </if>
+            <if test="roomothercash != null and roomothercash != ''">
+                roomOtherCash = #{roomothercash},
+            </if>
+            <if test="mangerfee != null and mangerfee != ''">
+                mangerFee = #{mangerfee},
+            </if>
+            <if test="interfee != null and interfee != ''">
+                interFee = #{interfee},
+            </if>
+            <if test="waterfee != null and waterfee != ''">
+                waterFee = #{waterfee},
+            </if>
+            <if test="otherfee != null and otherfee != ''">
+                otherFee = #{otherfee},
+            </if>
+            <if test="total != null and total != ''">
+                total = #{total},
+            </if>
+            <if test="roomid != null">
+                roomId = #{roomid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from rent.sys_room_detail where id = #{id}
+    </delete>
+
+</mapper>
