@@ -15,7 +15,7 @@ public class DownloadsSample {
     public static int count = 0;//计数器
 
 
-    public static void main(String[] args) {
+    public static void down() {
         //调度器
         ExecutorService executorService = Executors.newCachedThreadPool();
         Semaphore semaphore = new Semaphore(users);
@@ -38,7 +38,6 @@ public class DownloadsSample {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     private static void add() {
