@@ -21,7 +21,7 @@ public class Test {
     TenantService tenantService;
 
     @RequestMapping("/test1")
-    public String  test1() {
+    public String  test1() throws Exception{
         List<Tenant> list = tenantService.findAll();
         if (list.size() > 0) {
             StringBuffer params = new StringBuffer();

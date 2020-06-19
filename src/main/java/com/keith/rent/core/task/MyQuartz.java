@@ -28,7 +28,12 @@ public class MyQuartz extends QuartzJobBean {
      */
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        List<Tenant> tenants = tenantService.findAll();
+        List<Tenant> tenants = null;
+        try {
+            tenants = tenantService.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         String currentTime = DateUtil.getCurrentTimestamp(DateUtil.DEF_DATE);
         if (tenants.isEmpty()) {

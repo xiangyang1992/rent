@@ -12,7 +12,7 @@ public class DownloadsSample {
 
     public static int users = 100;    //同时模拟的并发访问用户数量
     public static int downTotal = 50000; //用户下载的真实总数
-    public static int count = 0;//计数器
+    public volatile static int count = 0;//计数器
 
 
     public static void down() {

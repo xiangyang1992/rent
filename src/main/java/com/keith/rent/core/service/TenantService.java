@@ -1,6 +1,8 @@
 package com.keith.rent.core.service;
 
 import com.keith.rent.core.entity.Tenant;
+import com.keith.rent.core.exception.RentException;
+
 import java.util.List;
 
 /**
@@ -53,7 +55,7 @@ public interface TenantService {
      */
     boolean deleteById(String tenantId);
 
-    List<Tenant> findAll();
+    List<Tenant> findAll() throws Exception, RentException;
 
     List<Tenant> queryByTenantName(String tenantName);
 

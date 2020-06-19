@@ -2,6 +2,7 @@ package com.keith.rent.core.service.impl;
 
 import com.keith.rent.core.dao.TenantDao;
 import com.keith.rent.core.entity.Tenant;
+import com.keith.rent.core.exception.RentException;
 import com.keith.rent.core.jdbcDao.TenantJdbcDao;
 import com.keith.rent.core.service.TenantService;
 import com.keith.rent.web.util.MapToBeanUtils;
@@ -87,7 +88,7 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public List<Tenant> findAll() {
+    public List<Tenant> findAll()throws Exception, RentException {
         return this.tenantDao.queryAllTenants();
     }
 

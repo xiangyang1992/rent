@@ -45,7 +45,7 @@ public class TenantController {
 
     @InsertLog(value = "查询所有租户信息", module = "租户管理")
     @GetMapping("findAll.do")
-    public HttpResult findAll() {
+    public HttpResult findAll() throws Exception {
         List<Tenant> tenants = this.tenantService.findAll();
         return HttpResult.ok(200, "查询成功", tenants);
     }
