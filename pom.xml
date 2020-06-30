@@ -139,6 +139,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-activemq</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.gjing</groupId>
+            <artifactId>tools-common</artifactId>
+            <version>1.6.2</version>
+        </dependency>
     </dependencies>
 
 	<build>

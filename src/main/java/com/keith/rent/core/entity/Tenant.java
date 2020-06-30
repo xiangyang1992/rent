@@ -19,6 +19,16 @@ import java.util.Date;
 @Data
 public class Tenant implements Serializable {
     private static final long serialVersionUID = 654815155463768688L;
+
+
+    public Tenant(@NotBlank(message = "租客姓名不能为空") String tenantName, @NotNull(message = "房间ID不能为空") Integer roomId) {
+        this.tenantName = tenantName;
+        this.roomId = roomId;
+    }
+
+    public Tenant() {
+    }
+
     /**
      * 租客ID
      */

@@ -42,7 +42,7 @@ public class LoginController {
      * @date: 2020/5/4
      * @version:
      */
-    @InsertLog(value = "验证码", module = "登录")
+//    @InsertLog(value = "验证码", module = "登录")
     @GetMapping("captcha.jpg")
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setHeader("Cache-Control", "no-store,no-cache");
