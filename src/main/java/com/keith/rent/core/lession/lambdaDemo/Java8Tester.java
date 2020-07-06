@@ -1,17 +1,16 @@
 package com.keith.rent.core.lession.lambdaDemo;
 
 import com.keith.rent.core.po.Student;
+import com.keith.rent.core.po.enum_demo.SpecialityEnum;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Copyright &copy; 2010 广州市道一信息技术有限公司 All rights reserved. User:
  */
 public class Java8Tester {
-
 
     public static void main(String[] args) {
         System.out.println("使用 Java7 ：");
@@ -46,7 +45,33 @@ public class Java8Tester {
                 .sorted()
                 .collect(Collectors.toList());
         System.out.println(list);
+
+
+        String[] array = {"Monkey", "Lion", "Giraffe", "Lemur"};
+        Stream<String> nameStrs2 = Stream.of(array);
+        System.out.println(nameStrs2);
+
+        List<String> list1 = Arrays.asList("Monkey", "Lion", "Giraffe", "Lemur");
+        Stream<String> stream = list1.stream();
+
+        Set<String> set = new HashSet<>(list1);
+        Stream<String> stream1 = set.stream();
+
+        final List<String> collect = stream.collect(Collectors.toList());
+        final List<String> collect1 = stream1.collect(Collectors.toList());
+        System.out.println(collect);
+        System.out.println(collect1);
+
+
+
+
+
     }
+
+
+
+
+
 
     private static List<Integer> getSquares(List<Integer> numbers) {
         List<Integer> squareList = new ArrayList<>();

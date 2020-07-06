@@ -3,6 +3,8 @@ package com.keith.rent.core.po;
 import com.keith.rent.core.po.enum_demo.SpecialityEnum;
 import lombok.Data;
 
+import java.util.function.Predicate;
+
 /**
  * Copyright &copy; 2010 广州市道一信息技术有限公司 All rights reserved. User:
  */
@@ -16,6 +18,10 @@ public class Student {
      * 兴趣爱好
      */
     private Enum<SpecialityEnum> specialities;
+
+
+    public static Predicate<Student> ageGreaterThan70 = student -> student.getAge() > 15;
+    public static Predicate<Student> genderM = student -> student.getStature() > 170;
 
     public Student(String name, int age, int stature) {
         this.name = name;
