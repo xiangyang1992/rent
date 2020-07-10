@@ -82,9 +82,6 @@ public class TenantController {
     @InsertLog(value = "查询单个租户信息", module = "租户管理")
     @GetMapping("getTenantByName.do")
     public HttpResult getTenantByName(@RequestParam String tenantName) {
-        if (tenantName == null) {
-            return HttpResult.error("查询姓名不能为空");
-        }
         List<Tenant> tenant = this.tenantService.queryByTenantName(tenantName);
         if (tenant != null) {
             for (Tenant tenant1 : tenant) {
