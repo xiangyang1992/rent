@@ -5,7 +5,6 @@ import com.keith.rent.core.po.enum_demo.SpecialityEnum;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * description:
@@ -20,11 +19,11 @@ public class StreamFilterPredicate {
         Student zhangsan = new Student("zhangsan", 24, 190, SpecialityEnum.SWIMMING);
 
         List<Student> students = Arrays.asList(xiangyang, panyangtao, zhangsan);
-
-        List<Student> filtered = students.stream()
-                .filter(Student.ageGreaterThan70.and(Student.genderM))
-                .collect(Collectors.toList());
-        System.out.println(filtered);
+//
+//        List<Student> filtered = students.stream()
+//                .filter(Student.ageGreaterThan70.and(Student.genderM))
+//                .collect(Collectors.toList());
+//        System.out.println(filtered);
     }
 
 

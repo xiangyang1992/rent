@@ -2,7 +2,6 @@ package com.keith.rent.core.config;
 
 import com.keith.rent.core.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -12,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * Copyright &copy; 2010 广州市道一信息技术有限公司 All rights reserved. User:
  */
 
-@Configuration
+//@Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
 
 

@@ -42,7 +42,7 @@ public class WeixinUtil {
         return null;
     }
 
-    private static String getReturn(HttpsURLConnection connection) throws Exception {
+    public static String getReturn(HttpsURLConnection connection) throws Exception {
         StringBuffer sb = new StringBuffer();
         InputStream inputStream = connection.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);

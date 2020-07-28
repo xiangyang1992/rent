@@ -6,16 +6,15 @@ import com.keith.rent.core.annotation.InsertLog;
 import com.keith.rent.core.constants.SysConstants;
 import com.keith.rent.core.entity.SysUser;
 import com.keith.rent.core.service.SysUserService;
+import com.keith.rent.core.utils.CachePool;
 import com.keith.rent.core.utils.HttpResult;
 import com.keith.rent.core.utils.PasswordEncoder;
 import com.keith.rent.core.utils.PasswordUtil;
 import com.keith.rent.core.vo.LoginBean;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -36,6 +35,9 @@ public class LoginController {
     @Autowired
     SysUserService sysUserService;
 
+    @Autowired
+    RedisTemplate redisTemplate;
+
     /**
      * @desc: 谷歌验证码生成插件
      * @author: 向阳
@@ -43,7 +45,7 @@ public class LoginController {
      * @version:
      */
 //    @InsertLog(value = "验证码", module = "登录")
-    @GetMapping("captcha.jpg")
+    @GetMapping("/captcha.jpg")
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setHeader("Cache-Control", "no-store,no-cache");
         response.setContentType("image/jpeg");
@@ -58,17 +60,17 @@ public class LoginController {
 
 
     //登录接口(验证用户名，密码，验证码)
-    @PostMapping("login")
+    @PostMapping("/login")
     public HttpResult login(@RequestBody @Valid LoginBean loginBean,
                             HttpServletRequest request, HttpSession session) {
         String username = loginBean.getAccout();
         String password = loginBean.getPassword();
-        String captcha = loginBean.getCaptcha();
+//        String captcha = loginBean.getCaptcha();
         //从session 中获取之前保存的验证码跟前台传来的验证码匹配
-        Object kaptcha = request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-        if (!kaptcha.equals(captcha)) {
-            return HttpResult.error("验证码不正确");
-        }
+//        Object kaptcha = request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+//        if (!kaptcha.equals(captcha)) {
+//            return HttpResult.error("验证码不正确");
+//        }
         //用户信息
         SysUser sysUser = sysUserService.queryByName(username);
         if (sysUser == null) {
@@ -118,5 +120,12 @@ public class LoginController {
         } else {
             return HttpResult.error("新增失败");
         }
+    }
+
+
+    @RequestMapping("/test.do")
+    public void test() {
+        String name = "xiangyang";
+        CachePool.put("name", name, 10000);
     }
 }

@@ -20,7 +20,7 @@ public class LoginBean {
     private String password;
     private String nickName;
     private String phone;
-    @NotNull(message = "验证码已失效")
+//    @NotNull(message = "验证码已失效")
     private String captcha;
 
     public String getAccout() {
